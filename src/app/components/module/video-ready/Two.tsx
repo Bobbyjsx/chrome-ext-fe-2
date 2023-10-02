@@ -1,30 +1,28 @@
-import Image from "next/image";
+import { useState, useEffect } from "react";
+import { getVideoById } from "src/app/lib/api";
 
-const Two = () => {
-      const details = {
-			title: "Untitled_Video_20232509",
-			video: "/assets/vid.svg",
-			videoUrl: "https://www.helpmeout/Untitled_Video_20232509",
-			transcript:
-				"First step. Open Facebook on your desktop or mobile device and locate &quot;Marketplace&quot; in the left-hand menu or at the top of the First step. Open Facebook on your desktop or mobile device and locate &quot;Marketplace&quot; in the left-hand menu or at the top of the ",
-		};
-  return (
+const Two = ({ id }: { id: string | null }) => {
+	const [dataArray, setDataArray] = useState<Vit | null>(null);
+
+	useEffect(() => {
+		getVideoById(id)
+			.then((data) => {
+				setDataArray(data.data);
+			})
+			.catch((error) => {
+				console.error("Error fetching all videos:", error);
+			});
+	}, []);
+
+
+	return (
 		<div>
 			<div className="w-full rounded-md">
-				<Image  
-					src={details.video}
-					alt={details.title}
-					width={1000}
-					height={1000}
-					className="w-full"
-				/>
-				{/* <video
-					src={
-						"file:///Users/bobby/Downloads/Screen_Recording_Demo_1696070674375.webm"
-					}
+				<video
+					src={`${dataArray?.videoPath}`}
 					controls={true}
 					className="w-full"
-				/> */}
+				/>
 			</div>
 			<div className="flex flex-col gap-5">
 				<p className="font-semibold font-sans text-primary tracking-wide text-xl">
@@ -88,7 +86,7 @@ const Two = () => {
 				</div>
 			</div>
 		</div>
-  );
-}
+	);
+};
 
-export default Two
+export default Two;

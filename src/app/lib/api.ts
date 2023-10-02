@@ -1,6 +1,6 @@
 export const API_BASE_URL =
 	"https://seashell-app-4jicj.ondigitalocean.app/api";
-export async function getVideoById(id: string) {
+export async function getVideoById(id: string|null) {
 	const apiUrl = `${API_BASE_URL}/video/get/${id}`;
 	const response = await fetch(apiUrl);
 	if (!response.ok) {

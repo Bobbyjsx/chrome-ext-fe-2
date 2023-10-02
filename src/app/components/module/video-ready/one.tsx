@@ -1,4 +1,6 @@
-"use client"
+"use client";
+import { useState, useEffect } from "react";
+import { getVideoById } from "src/app/lib/api";
 import { Input } from "../../Input";
 import { LoadingSpinner } from "../../LoadingSpinner";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -8,26 +10,39 @@ type Vid = {
 	videoUrl: string;
 };
 
-const One = () => {
-    const details = {
+const One = ({ id }: { id: string | null }) => {
+	
+	const [dataArray, setDataArray] = useState<Vit | null>(null);
+
+	useEffect(() => {
+		getVideoById(id)
+			.then((data) => {
+				setDataArray(data.data);
+			})
+			.catch((error) => {
+				console.error("Error fetching all videos:", error);
+			});
+	}, []);
+
+	const details = {
 		title: "Untitled_Video_20232509",
 		video: "/assets/vid.svg",
 		videoUrl: "https://www.helpmeout/Untitled_Video_20232509",
 		transcript:
 			"First step. Open Facebook on your desktop or mobile device and locate &quot;Marketplace&quot; in the left-hand menu or at the top of the First step. Open Facebook on your desktop or mobile device and locate &quot;Marketplace&quot; in the left-hand menu or at the top of the ",
 	};
-    	const {
-			register,
-			handleSubmit,
-			formState: {  isSubmitSuccessful, isSubmitting },
-		} = useForm<Vid>();
+	const {
+		register,
+		handleSubmit,
+		formState: { isSubmitSuccessful, isSubmitting },
+	} = useForm<Vid>();
 
-		const submit: SubmitHandler<Vid> = async (values) => {
-			if (isSubmitSuccessful) {
-				alert(`Submited. \n email: ${values.email}`);
-			}
-        };
-    
+	const submit: SubmitHandler<Vid> = async (values) => {
+		if (isSubmitSuccessful) {
+			alert(`Submited. \n email: ${values.email}`);
+		}
+	};
+
 	return (
 		<div className="w-full flex flex-col gap-8">
 			<div className="flex justify-start items-start w-full">
@@ -88,7 +103,7 @@ const One = () => {
 						className="py-4 px-2  bg-gray-200 cursor-text"
 						disabled={true}
 						type="text"
-						value={details.videoUrl}
+						value={dataArray?.videoPath}
 						{...register("videoUrl")}
 						trailingIcon={
 							<button
@@ -96,7 +111,7 @@ const One = () => {
 								onClick={async () => {
 									try {
 										await navigator.clipboard.writeText(
-											`${details.videoUrl}`
+											`${dataArray?.videoPath}`
 										);
 										console.log("success");
 									} catch (err) {
@@ -157,9 +172,8 @@ const One = () => {
 							height="24"
 							viewBox="0 0 20 22"
 							fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        className="w-full"
-                        >
+							xmlns="http://www.w3.org/2000/svg"
+							className="w-full">
 							<path
 								fillRule="evenodd"
 								clipRule="evenodd"
