@@ -1,6 +1,5 @@
 "use client";
 import Nav from "../navs/Nav";
-import Image from "next/image";
 import { Input } from "../Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { LoadingSpinner } from "../LoadingSpinner";

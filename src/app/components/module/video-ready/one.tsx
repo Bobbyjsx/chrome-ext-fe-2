@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 import { Input } from "../../Input";
 import { LoadingSpinner } from "../../LoadingSpinner";
 import { useForm, SubmitHandler } from "react-hook-form";
