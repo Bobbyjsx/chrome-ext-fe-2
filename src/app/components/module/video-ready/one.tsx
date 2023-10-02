@@ -19,7 +19,7 @@ const One = () => {
     	const {
 			register,
 			handleSubmit,
-			formState: { errors, isSubmitSuccessful, isSubmitting },
+			formState: {  isSubmitSuccessful, isSubmitting },
 		} = useForm<Vid>();
 
 		const submit: SubmitHandler<Vid> = async (values) => {

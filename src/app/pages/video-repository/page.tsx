@@ -6,12 +6,7 @@ import { Input } from "src/app/components/Input";
 import { getAllVideos } from "src/app/lib/api";
 import { useState, useEffect } from "react";
 
-function generateBlobUrl() {
-	const blob = new Blob(["Sample Video Data"], {
-		type: "video/mp4",
-	});
-	return URL.createObjectURL(blob);
-}
+
 
 const Page = () => {
 	const [dataArray, setDataArray] = useState<VideoItem[] | []>([]);
@@ -30,7 +25,7 @@ const Page = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitSuccessful, isSubmitting },
+		formState: {  isSubmitSuccessful },
 	} = useForm<{ search: string }>();
 
 	const submit: SubmitHandler<{ search: string }> = async (

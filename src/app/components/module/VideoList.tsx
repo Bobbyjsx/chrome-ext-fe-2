@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import Link from "next/link";
-import Image from "next/image";
 
 const VideoList = ({ vId, createdAt, video }: VideoItem) => {
 	return (
